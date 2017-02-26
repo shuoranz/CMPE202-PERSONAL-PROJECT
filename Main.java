@@ -63,11 +63,31 @@ public class Main {
         
         plantUmlSource.append("skinparam classAttributeIconSize 0\n");
         
-        plantUmlSource.append("class Hello1 {\n");
+        plantUmlSource.append("class A {\n");
 
-        plantUmlSource.append("+String getStr\n");
+        plantUmlSource.append("-int x\n");
+        
+        plantUmlSource.append("-int y\n");
         
         plantUmlSource.append("}\n");
+        
+        plantUmlSource.append("class B {\n");
+        
+        plantUmlSource.append("}\n");
+        
+        plantUmlSource.append("A \"1\" -- \"many\" B\n");
+        
+        plantUmlSource.append("class C {\n");
+        
+        plantUmlSource.append("}\n");
+        
+        plantUmlSource.append("A \"1\" -- \"1\" C\n");
+        
+        plantUmlSource.append("class D {\n");
+        
+        plantUmlSource.append("}\n");
+        
+        plantUmlSource.append("A \"1\" -- \"many\" D\n");
 
         plantUmlSource.append("@enduml");
         
