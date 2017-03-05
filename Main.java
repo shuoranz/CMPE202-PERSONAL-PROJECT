@@ -1,31 +1,21 @@
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.util.Optional;
 import java.util.Scanner;
-
-import javax.imageio.ImageIO;
-
 import com.github.javaparser.JavaParser;
-import com.github.javaparser.ParseException;
-import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.*;
+import com.github.javaparser.ast.body.FieldDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
-import java.io.FileOutputStream;
-import java.io.FileReader;
-
-import net.sourceforge.plantuml.FileFormat; 
-import net.sourceforge.plantuml.FileFormatOption; 
-import net.sourceforge.plantuml.SourceStringReader; 
-import net.sourceforge.plantuml.syntax.SyntaxChecker; 
-import net.sourceforge.plantuml.syntax.SyntaxResult;
-
+import net.sourceforge.plantuml.*;
 public class Main {
-	public static void main(String[] args) throws IOException, ParseException{
+
+
+	private static final Object PUBLIC = null;
+	private static final Object STATIC = null;
+
+	public static void main(String[] args) throws IOException{
 		
 		//start JavaParse test
 		
@@ -33,11 +23,17 @@ public class Main {
 
         // parse it
         CompilationUnit cu = JavaParser.parse(in);
-
+        
+        MethodVisitor visitor = new MethodVisitor();
+        visitor.visit(cu, null);
+        
+        //System.out.println(visitor.getParseResult());
+        
         // visit and print the methods names
-        System.out.println(cu.toString());
+        //System.out.println(cu.toString());
         
-        
+
+
         //start plantUML test
 		
 		StringBuilder plantUmlSource = new StringBuilder();
@@ -52,7 +48,7 @@ public class Main {
 		    while(scanner.hasNextLine()){
 		    	lines = scanner.nextLine();
 		    	//plantUmlSource.append(lines);
-		    	System.out.println(lines);
+		    	//System.out.println(lines);
 		    }
 		    scanner.close();
 		    
@@ -60,7 +56,7 @@ public class Main {
 		    e.printStackTrace();
 		}
 
-        
+        /*
         plantUmlSource.append("skinparam classAttributeIconSize 0\n");
         
         plantUmlSource.append("class A {\n");
@@ -96,5 +92,28 @@ public class Main {
         FileOutputStream output = new FileOutputStream(new File("Hello1.png"));
 
         reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
+        */
 	}
+
+	public static class MethodVisitor extends VoidVisitorAdapter<Void> {
+        private String result;
+        public String getParseResult(){ return this.result;}
+        private void setParseResult(String value){this.result+=value+"\n";}
+        @Override
+        public void visit(MethodDeclaration n, Void arg) {
+
+        	//System.out.print(n.getType() + " " + n.getModifiers());
+        	System.out.println(n.toString());
+        	String modifier = n.getModifiers().toString();
+        	if(modifier.equals("[PUBLIC]")){
+        		
+        		this.setParseResult(n.getType().toString() + " " + n.getName().toString());
+        	}
+        	
+        	
+            //super.visit(n, arg);
+            
+        }
+    }
+
 }
