@@ -1,6 +1,6 @@
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Optional;
+//import java.util.Optional;
 import java.util.Scanner;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.*;
@@ -24,15 +24,37 @@ public class Main {
         // parse it
         CompilationUnit cu = JavaParser.parse(in);
         
+        
+        
+        
+        for (TypeDeclaration typeDec : cu.getTypes()) {
+            List<BodyDeclaration> members = typeDec.getMembers();
+            if(members != null) {
+                for (BodyDeclaration member : members) {
+                //Check just members that are FieldDeclarations
+                FieldDeclaration field = (FieldDeclaration) member;
+                //Print the field's class typr
+                System.out.println(field.getType());
+                //Print the field's name 
+                System.out.println(field.getVariables().get(0).getId().getName());
+                //Print the field's init value, if not null
+                Object initValue = field.getVariables().get(0).getInit();
+                if(initValue != null) {
+                     System.out.println(field.getVariables().get(0).getInit().toString());
+                }  
+            }
+        }
+        
         MethodVisitor visitor = new MethodVisitor();
         visitor.visit(cu, null);
         
         //System.out.println(visitor.getParseResult());
         
+        System.out.println(visitor.getParseResult().replace("null",""));
         // visit and print the methods names
         //System.out.println(cu.toString());
         
-
+        
 
         //start plantUML test
 		
@@ -109,7 +131,6 @@ public class Main {
         		
         		this.setParseResult(n.getType().toString() + " " + n.getName().toString());
         	}
-        	
         	
             //super.visit(n, arg);
             
