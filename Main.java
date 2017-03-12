@@ -6,6 +6,7 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.*;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import net.sourceforge.plantuml.*;
@@ -70,43 +71,13 @@ public class Main {
 		    e.printStackTrace();
 		}
 
-        /*
-        plantUmlSource.append("skinparam classAttributeIconSize 0\n");
-        
-        plantUmlSource.append("class A {\n");
-
-        plantUmlSource.append("-int x\n");
-        
-        plantUmlSource.append("-int y\n");
-        
-        plantUmlSource.append("}\n");
-        
-        plantUmlSource.append("class B {\n");
-        
-        plantUmlSource.append("}\n");
-        
-        plantUmlSource.append("A \"1\" -- \"many\" B\n");
-        
-        plantUmlSource.append("class C {\n");
-        
-        plantUmlSource.append("}\n");
-        
-        plantUmlSource.append("A \"1\" -- \"1\" C\n");
-        
-        plantUmlSource.append("class D {\n");
-        
-        plantUmlSource.append("}\n");
-        
-        plantUmlSource.append("A \"1\" -- \"many\" D\n");
-
-        plantUmlSource.append("@enduml");
         
         SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
 
         FileOutputStream output = new FileOutputStream(new File("Hello1.png"));
 
         reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
-        */
+
 	}
 
 	public static class MethodVisitor extends VoidVisitorAdapter<Void> {
@@ -127,6 +98,19 @@ public class Main {
             //super.visit(n, arg);
             
         }
+        
+        void processNode(Node node) {
+    	   if (node instanceof TypeDeclaration) {
+    	      // do something with this type declaration
+    	   } else if (node instanceof MethodDeclaration) {
+    	      // do something with this method declaration
+    	   } else if (node instanceof FieldDeclaration) {
+    	      // do something with this field declaration
+    	   }
+    	   for (Node child : node.getChildrenNodes()){
+    	      processNode(child);
+    	   }
+    	}
     }
 
 }
