@@ -27,24 +27,6 @@ public class Main {
         
         
         
-        for (TypeDeclaration typeDec : cu.getTypes()) {
-            List<BodyDeclaration> members = typeDec.getMembers();
-            if(members != null) {
-                for (BodyDeclaration member : members) {
-                //Check just members that are FieldDeclarations
-                FieldDeclaration field = (FieldDeclaration) member;
-                //Print the field's class typr
-                System.out.println(field.getType());
-                //Print the field's name 
-                System.out.println(field.getVariables().get(0).getId().getName());
-                //Print the field's init value, if not null
-                Object initValue = field.getVariables().get(0).getInit();
-                if(initValue != null) {
-                     System.out.println(field.getVariables().get(0).getInit().toString());
-                }  
-            }
-        }
-        
         MethodVisitor visitor = new MethodVisitor();
         visitor.visit(cu, null);
         
@@ -62,7 +44,17 @@ public class Main {
 		
         plantUmlSource.append("@startuml\n");
         
-
+        
+        plantUmlSource.append("skinparam classAttributeIconSize 0\n");
+        
+        plantUmlSource.append("class Hello1 {\n");
+        
+        String temp = visitor.getParseResult().replace("null","");
+        
+        plantUmlSource.append(temp + " \n");
+        
+        plantUmlSource.append("}\n");
+        
 		try {
 		    File file = new File("src/Hello1.java");
 		    Scanner scanner = new Scanner(file);
