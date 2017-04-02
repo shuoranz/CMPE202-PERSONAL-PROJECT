@@ -95,22 +95,10 @@ public class Main {
         		this.setParseResult(n.getType().toString() + " " + n.getName().toString());
         	}
         	
-            //super.visit(n, arg);
+            super.visit(n, arg);
             
         }
         
-        void processNode(Node node) {
-    	   if (node instanceof TypeDeclaration) {
-    	      // do something with this type declaration
-    	   } else if (node instanceof MethodDeclaration) {
-    	      // do something with this method declaration
-    	   } else if (node instanceof FieldDeclaration) {
-    	      // do something with this field declaration
-    	   }
-    	   for (Node child : node.getChildrenNodes()){
-    	      processNode(child);
-    	   }
-    	}
     }
 
 }
