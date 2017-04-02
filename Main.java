@@ -131,13 +131,18 @@ public class Main {
 		
         plantUmlSource.append("@startuml\n");
         
-        
         //plantUmlSource.append("skinparam classAttributeIconSize 0\n");
         
-        plantUmlSource.append("class A {\n");
+        //plantUmlSource.append("class A {\n");
 
-        String temp = visitor.getParseResult().replace("null","");
-		/*
+        //String temp = visitor.getParseResult().replace("null","");
+        
+        String temp = "class A {\n"
+        		+ "}\n"
+        		+ "class B {\n"
+        		+ "}\n"
+        		+ "A <|-- B\n";
+        
         System.out.println(temp);
         
         plantUmlSource.append(temp + " \n");
@@ -153,7 +158,7 @@ public class Main {
         FileOutputStream output = new FileOutputStream(new File("A.png"));
 
         reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
-		*/
+		
 		return true;
 	}
 	
