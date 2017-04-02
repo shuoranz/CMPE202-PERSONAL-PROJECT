@@ -19,7 +19,10 @@ public class Main {
 	public static void main(String[] args) throws IOException{
 		
 		
-		TestHello();
+		//TestHello();
+		TestCase1();
+		
+		/*
 		try {
 		    File file = new File("src/Hello1.java");
 		    Scanner scanner = new Scanner(file);
@@ -34,10 +37,8 @@ public class Main {
 		} catch (FileNotFoundException e) {
 		    e.printStackTrace();
 		}
-
+		*/
         
-        
-
 	}
 
 	public static class MethodVisitor extends VoidVisitorAdapter<Void> {
@@ -61,76 +62,118 @@ public class Main {
         
     }
 	
-	public static boolean TestHello() throws IOException{
+	static boolean TestHello() throws IOException{
 		//start JavaParse test
-				FileInputStream in = new FileInputStream("src/Hello1.java");
-		        // parse it
-		        CompilationUnit cu = JavaParser.parse(in);
-		        
-		        
-		        MethodVisitor visitor = new MethodVisitor();
-		        visitor.visit(cu, null);
-		        
-		        //System.out.println(visitor.getParseResult());
-		        
-		        //System.out.println(visitor.getParseResult().replace("null",""));
-		        // visit and print the methods names
-		        //System.out.println(cu.toString());
-		        
-		        
+		FileInputStream in = new FileInputStream("src/Hello1.java");
+        // parse it
+        CompilationUnit cu = JavaParser.parse(in);
+        
+        
+        MethodVisitor visitor = new MethodVisitor();
+        visitor.visit(cu, null);
+        
+        //System.out.println(visitor.getParseResult());
+        
+        //System.out.println(visitor.getParseResult().replace("null",""));
+        // visit and print the methods names
+        //System.out.println(cu.toString());
+        
+        
 
-		        //start plantUML test
-				
-				StringBuilder plantUmlSource = new StringBuilder();
-				
-		        plantUmlSource.append("@startuml\n");
-		        
-		        
-		        //plantUmlSource.append("skinparam classAttributeIconSize 0\n");
-		        
-		        plantUmlSource.append("class Hello1 {\n");
-		        
-		        String temp = visitor.getParseResult().replace("null","");
-		        
-		        System.out.println(temp);
-		        
-		        plantUmlSource.append(temp + " \n");
-		        
-		        //plantUmlSource.append("String getStr() \n");
-		        
-		        plantUmlSource.append("}\n");
-		        
-		        plantUmlSource.append("@enduml");
-		        
-		        SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
+        //start plantUML test
+		
+		StringBuilder plantUmlSource = new StringBuilder();
+		
+        plantUmlSource.append("@startuml\n");
+        
+        
+        //plantUmlSource.append("skinparam classAttributeIconSize 0\n");
+        
+        plantUmlSource.append("class Hello1 {\n");
+        
+        String temp = visitor.getParseResult().replace("null","");
+        
+        System.out.println(temp);
+        
+        plantUmlSource.append(temp + " \n");
+        
+        //plantUmlSource.append("String getStr() \n");
+        
+        plantUmlSource.append("}\n");
+        
+        plantUmlSource.append("@enduml");
+        
+        SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
 
-		        FileOutputStream output = new FileOutputStream(new File("Hello1.png"));
+        FileOutputStream output = new FileOutputStream(new File("Hello1.png"));
 
-		        reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
+        reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
+        
 		return true;
 	}
 
-	public boolean TestCase1() throws IOException{
+	static boolean TestCase1() throws IOException{
+		
+		//start JavaParse test
+		FileInputStream in = new FileInputStream("src/A.java");
+		
+
+        // parse it
+        CompilationUnit cu = JavaParser.parse(in);
+        
+        
+        MethodVisitor visitor = new MethodVisitor();
+        visitor.visit(cu, null);
+        
+        //start plantUML test
+
+		StringBuilder plantUmlSource = new StringBuilder();
+		
+        plantUmlSource.append("@startuml\n");
+        
+        
+        //plantUmlSource.append("skinparam classAttributeIconSize 0\n");
+        
+        plantUmlSource.append("class A {\n");
+
+        String temp = visitor.getParseResult().replace("null","");
+		/*
+        System.out.println(temp);
+        
+        plantUmlSource.append(temp + " \n");
+        
+        //plantUmlSource.append("String getStr() \n");
+        
+        plantUmlSource.append("}\n");
+        
+        plantUmlSource.append("@enduml");
+
+        SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
+
+        FileOutputStream output = new FileOutputStream(new File("A.png"));
+
+        reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
+		*/
 		return true;
 	}
 	
-	public boolean TestCase2() throws IOException{
+	static boolean TestCase2() throws IOException{
 		return true;
 	}
 	
-	public boolean TestCase3() throws IOException{
+	static boolean TestCase3() throws IOException{
 		return true;
 	}
 	
-	public boolean TestCase4() throws IOException{
+	static boolean TestCase4() throws IOException{
 		return true;
 	}
 	
-	public boolean TestCase5() throws IOException{
+	static boolean TestCase5() throws IOException{
 		return true;
 	}
 	
-	public boolean TestCase6(){
+	static boolean TestCase6(){
 		return true;
 	}
 }
