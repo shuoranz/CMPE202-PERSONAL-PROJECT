@@ -46,7 +46,7 @@ public class Main {
         plantUmlSource.append("@startuml\n");
         
         
-        plantUmlSource.append("skinparam classAttributeIconSize 0\n");
+        //plantUmlSource.append("skinparam classAttributeIconSize 0\n");
         
         plantUmlSource.append("class Hello1 {\n");
         
@@ -54,9 +54,13 @@ public class Main {
         
         System.out.println(temp);
         
-        plantUmlSource.append(temp + " \n");
+        //plantUmlSource.append(temp + " \n");
+        
+        plantUmlSource.append("String getStr() \n");
         
         plantUmlSource.append("}\n");
+        
+        plantUmlSource.append("@enduml");
         
 		try {
 		    File file = new File("src/Hello1.java");
@@ -94,7 +98,7 @@ public class Main {
         	String modifier = n.getModifiers().toString();
         	if(modifier.equals("[PUBLIC]")){
         		
-        		this.setParseResult(n.getType().toString() + " " + n.getName().toString());
+        		this.setParseResult(n.getType().toString() + " " + n.getName().toString() + "()");
         	}
         	
             //super.visit(n, arg);
