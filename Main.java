@@ -33,7 +33,7 @@ public class Main {
         
         //System.out.println(visitor.getParseResult());
         
-        System.out.println(visitor.getParseResult().replace("null",""));
+        //System.out.println(visitor.getParseResult().replace("null",""));
         // visit and print the methods names
         //System.out.println(cu.toString());
         
@@ -51,6 +51,8 @@ public class Main {
         plantUmlSource.append("class Hello1 {\n");
         
         String temp = visitor.getParseResult().replace("null","");
+        
+        System.out.println(temp);
         
         plantUmlSource.append(temp + " \n");
         
@@ -88,14 +90,14 @@ public class Main {
         public void visit(MethodDeclaration n, Void arg) {
 
         	//System.out.print(n.getType() + " " + n.getModifiers());
-        	System.out.println(n.toString());
+        	//System.out.println(n.toString());
         	String modifier = n.getModifiers().toString();
         	if(modifier.equals("[PUBLIC]")){
         		
         		this.setParseResult(n.getType().toString() + " " + n.getName().toString());
         	}
         	
-            super.visit(n, arg);
+            //super.visit(n, arg);
             
         }
         
