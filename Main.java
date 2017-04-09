@@ -150,13 +150,13 @@ public class Main {
         +"\n"
         +"class B {\n"
         +"}\n"
-        +"A -- B\n"
+        +"A -- \"*\" B\n"
         +"class C {\n"
         +"}\n"
-        +"A -- C\n"
+        +"A \"1\" -- \"1\" C\n"
         +"class D {\n"
         +"}\n"
-        +"A -- D\n"
+        +"A -- \"0..*\" D\n"
         +"@enduml";
         
         System.out.println(temp);
