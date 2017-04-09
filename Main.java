@@ -143,15 +143,20 @@ public class Main {
         		+ "A <|-- B\n";
         */
         String temp = "@startuml\n"
-        +"class Dummy {\n"
-        +"  String data\n"
-        +"  void methods()\n"
+        +"class A {\n"
+        +"  int x\n"
+        +"  int y\n"
         +"}\n"
         +"\n"
-        +"class Flight {\n"
-        +"   flightNumber : Integer\n"
-        +"   departureTime : Date\n"
+        +"class B {\n"
         +"}\n"
+        +"A -- B\n"
+        +"class C {\n"
+        +"}\n"
+        +"A -- C\n"
+        +"class D {\n"
+        +"}\n"
+        +"A -- D\n"
         +"@enduml";
         
         System.out.println(temp);
