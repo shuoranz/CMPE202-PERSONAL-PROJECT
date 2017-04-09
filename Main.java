@@ -128,19 +128,31 @@ public class Main {
 
 		StringBuilder plantUmlSource = new StringBuilder();
 		
-        plantUmlSource.append("@startuml\n");
+        //plantUmlSource.append("@startuml\n");
         
         //plantUmlSource.append("skinparam classAttributeIconSize 0\n");
         
         //plantUmlSource.append("class A {\n");
 
         //String temp = visitor.getParseResult().replace("null","");
-        
+        /*
         String temp = "class A {\n"
         		+ "}\n"
         		+ "class B {\n"
         		+ "}\n"
         		+ "A <|-- B\n";
+        */
+        String temp = "@startuml\n"
+        +"class Dummy {\n"
+        +"  String data\n"
+        +"  void methods()\n"
+        +"}\n"
+        +"\n"
+        +"class Flight {\n"
+        +"   flightNumber : Integer\n"
+        +"   departureTime : Date\n"
+        +"}\n"
+        +"@enduml";
         
         System.out.println(temp);
         
@@ -148,9 +160,9 @@ public class Main {
         
         //plantUmlSource.append("String getStr() \n");
         
-        plantUmlSource.append("}\n");
+        //plantUmlSource.append("}\n");
         
-        plantUmlSource.append("@enduml");
+        //plantUmlSource.append("@enduml");
 
         SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
 
