@@ -162,7 +162,52 @@ public class Main {
 	}
 	
 	static boolean TestCase2() throws IOException{
-		return true;
+		//start JavaParse test
+				FileInputStream in = new FileInputStream("src/A.java");
+				
+
+		        // parse it
+		        CompilationUnit cu = JavaParser.parse(in);
+		        
+		        
+		        MethodVisitor visitor = new MethodVisitor();
+		        visitor.visit(cu, null);
+		        
+		        //start plantUML test
+
+				StringBuilder plantUmlSource = new StringBuilder();
+				
+		        plantUmlSource.append("@startuml\n");
+		        
+		        //plantUmlSource.append("skinparam classAttributeIconSize 0\n");
+		        
+		        //plantUmlSource.append("class A {\n");
+
+		        //String temp = visitor.getParseResult().replace("null","");
+		        
+		        String temp = "class A {\n"
+		        		+ "}\n"
+		        		+ "class B {\n"
+		        		+ "}\n"
+		        		+ "A <|-- B\n";
+		        
+		        System.out.println(temp);
+		        
+		        plantUmlSource.append(temp + " \n");
+		        
+		        //plantUmlSource.append("String getStr() \n");
+		        
+		        plantUmlSource.append("}\n");
+		        
+		        plantUmlSource.append("@enduml");
+
+		        SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
+
+		        FileOutputStream output = new FileOutputStream(new File("A.png"));
+
+		        reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
+				
+				return true;
 	}
 	
 	static boolean TestCase3() throws IOException{
