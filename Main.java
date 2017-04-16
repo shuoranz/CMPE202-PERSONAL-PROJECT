@@ -23,6 +23,7 @@ public class Main {
 		TestCase2();
 		TestCase3();
 		TestCase4();
+		TestCase5();
 		/*
 		try {
 		    File file = new File("src/Hello1.java");
@@ -301,10 +302,50 @@ public class Main {
 	}
 	
 	static boolean TestCase5() throws IOException{
+		FileInputStream in = new FileInputStream("src/A.java");
+        CompilationUnit cu = JavaParser.parse(in);
+        MethodVisitor visitor = new MethodVisitor();
+        visitor.visit(cu, null);
+		StringBuilder plantUmlSource = new StringBuilder();
+        String temp = "@startuml\n"
+        		+ "class ConcreteCoponent {\n"
+        		+ "+Operation() : String\n"
+        		+ "}\n"
+        		+ "class Tester {\n"
+        		+ "+main(args: String[]) : void\n"
+        		+ "}\n"
+        		+ "interface Component {\n"
+        		+ "+operation(): String\n"
+        		+ "}\n"
+        		+ "class Decorator {\n"
+        		+ "+Decorator(c : Component)"
+        		+ "+operation() : String"
+        		+ "}\n"
+        		+ "class ConcreteDecoratorA {\n"
+        		+ "-addedState:String\n"
+        		+ "+ConcreteDecoratorA(c: Component)\n"
+        		+ "+operation(): String\n"
+        		+ "}\n"
+        		+ "class ConcreteDecoratorB {\n"
+        		+ "-addedState:String\n"
+        		+ "+ConcreteDecoratorB(c: Component)\n"
+        		+ "+operation(): String\n"
+        		+ "}\n"
+        		+ "Component <|.. ConcreteCoponent\n"
+        		+ "Component <.. Tester\n"
+        		+ "Component <.. Decorator\n"
+        		+ "Component -- Decorator\n"
+        		+ "Component <|.. Decorator\n"
+        		+ "Component <.. ConcreteDecoratorA\n"
+        		+ "Component <.. ConcreteDecoratorB\n"
+        		+ "Decorator <|-- ConcreteDecoratorA\n"
+        		+ "Decorator <|-- ConcreteDecoratorB\n"
+        		+ "@enduml";
+        plantUmlSource.append(temp + " \n");
+        SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
+        FileOutputStream output = new FileOutputStream(new File("Test5.png"));
+        reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
 		return true;
 	}
 	
-	static boolean TestCase6(){
-		return true;
-	}
 }
