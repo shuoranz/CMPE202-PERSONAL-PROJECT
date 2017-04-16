@@ -20,7 +20,7 @@ public class Main {
 		
 		
 		TestCase1();
-		
+		TestCase2();
 		/*
 		try {
 		    File file = new File("src/Hello1.java");
@@ -179,52 +179,48 @@ public class Main {
 	}
 	
 	static boolean TestCase2() throws IOException{
+		
 		//start JavaParse test
-				FileInputStream in = new FileInputStream("src/A.java");
-				
+		FileInputStream in = new FileInputStream("src/A.java");
+        CompilationUnit cu = JavaParser.parse(in);
+        MethodVisitor visitor = new MethodVisitor();
+        visitor.visit(cu, null);
 
-		        // parse it
-		        CompilationUnit cu = JavaParser.parse(in);
-		        
-		        
-		        MethodVisitor visitor = new MethodVisitor();
-		        visitor.visit(cu, null);
-		        
-		        //start plantUML test
+		StringBuilder plantUmlSource = new StringBuilder();
+		
+        String temp = "@startuml\n"
+        		+"class P {\n"
+        		+ "}\n"
+        		+ "class B1 {\n"
+        		+ "}\n"
+        		+ "class B2 {\n"
+        		+ "}\n"
+        		+ "class C1 {\n"
+        		+ "}\n"
+        		+ "class C2 {\n"
+        		+ "}\n"
+        		+ "P ^-- B1\n"
+        		+ "P ^-- B2\n"
+        		+ "@enduml";
+        
+        System.out.println(temp);
+        
+        plantUmlSource.append(temp + " \n");
+        
+        //plantUmlSource.append("String getStr() \n");
+        
+        //plantUmlSource.append("}\n");
+        
+        //plantUmlSource.append("@enduml");
 
-				StringBuilder plantUmlSource = new StringBuilder();
-				
-		        plantUmlSource.append("@startuml\n");
-		        
-		        //plantUmlSource.append("skinparam classAttributeIconSize 0\n");
-		        
-		        //plantUmlSource.append("class A {\n");
+        SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
 
-		        //String temp = visitor.getParseResult().replace("null","");
-		        
-		        String temp = "class A {\n"
-		        		+ "}\n"
-		        		+ "class B {\n"
-		        		+ "}\n"
-		        		+ "A <|-- B\n";
-		        
-		        System.out.println(temp);
-		        
-		        plantUmlSource.append(temp + " \n");
-		        
-		        //plantUmlSource.append("String getStr() \n");
-		        
-		        plantUmlSource.append("}\n");
-		        
-		        plantUmlSource.append("@enduml");
+        FileOutputStream output = new FileOutputStream(new File("Test2.png"));
 
-		        SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
-
-		        FileOutputStream output = new FileOutputStream(new File("A.png"));
-
-		        reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
-				
-				return true;
+        reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
+		
+		return true;
+		
 	}
 	
 	static boolean TestCase3() throws IOException{
