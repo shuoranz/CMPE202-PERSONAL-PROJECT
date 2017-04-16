@@ -22,6 +22,7 @@ public class Main {
 		TestCase1();
 		TestCase2();
 		TestCase3();
+		TestCase4();
 		/*
 		try {
 		    File file = new File("src/Hello1.java");
@@ -30,7 +31,7 @@ public class Main {
 		    while(scanner.hasNextLine()){
 		    	lines = scanner.nextLine();
 		    	//plantUmlSource.append(lines);
-		    	//System.out.println(lines);
+		    x	//System.out.println(lines);
 		    }
 		    scanner.close();
 		    
@@ -255,6 +256,47 @@ public class Main {
 	}
 	
 	static boolean TestCase4() throws IOException{
+		FileInputStream in = new FileInputStream("src/A.java");
+        CompilationUnit cu = JavaParser.parse(in);
+        MethodVisitor visitor = new MethodVisitor();
+        visitor.visit(cu, null);
+		StringBuilder plantUmlSource = new StringBuilder();
+        String temp = "@startuml\n"
+        		+ "class Optimist {\n"
+        		+ "+Optimist(sub : ConcreteSubject)\n"
+        		+ "+update(): void\n"
+        		+ "}\n"
+        		+ "class Pessimist {\n"
+        		+ "+Pessimist(sub : ConcreteSubject)\n"
+        		+ "+update(): void\n"
+        		+ "}\n"
+        		+ "class ConcreteObserver {\n"
+        		+ "+ConcreteObserver(theSubject: ConcreteSubject)\n"
+        		+ "+showState(): void\n"
+        		+ "+update(): void\n"
+        		+ "}\n"
+        		+ "class TheEconomy {\n"
+        		+ "}\n"
+        		+ "class ConcreteSubject {\n"
+        		+ "-subjectState:String\n"
+        		+ "+getState(): String\n"
+        		+ "+setState(status: String): void\n"
+        		+ "+showState(): void\n"
+        		+ "}\n"
+        		+ "interface Subject\n"
+        		+ "interface Observer\n"
+        		+ "Observer <.. ConcreteSubject\n"
+        		+ "Observer <|.. ConcreteObserver\n"
+        		+ "Subject <|.. ConcreteSubject\n"
+        		+ "ConcreteSubject <|-- TheEconomy\n"
+        		+ "ConcreteObserver <|-- Optimist\n"
+        		+ "ConcreteObserver <|-- Pessimist\n"
+        		+ "ConcreteSubject -- ConcreteObserver\n"
+        		+ "@enduml";
+        plantUmlSource.append(temp + " \n");
+        SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
+        FileOutputStream output = new FileOutputStream(new File("Test4.png"));
+        reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
 		return true;
 	}
 	
