@@ -21,6 +21,7 @@ public class Main {
 		
 		TestCase1();
 		TestCase2();
+		TestCase3();
 		/*
 		try {
 		    File file = new File("src/Hello1.java");
@@ -230,6 +231,26 @@ public class Main {
 	}
 	
 	static boolean TestCase3() throws IOException{
+		FileInputStream in = new FileInputStream("src/A.java");
+        CompilationUnit cu = JavaParser.parse(in);
+        MethodVisitor visitor = new MethodVisitor();
+        visitor.visit(cu, null);
+		StringBuilder plantUmlSource = new StringBuilder();
+        String temp = "@startuml\n"
+        		+ "class A {\n"
+        		+ "+message: String\n"
+        		+ "-bark: String\n"
+        		+ "+testMethod(): void\n"
+        		+ "}\n"
+        		+ "class B {\n"
+        		+ "-hello:String\n"
+        		+ "}\n"
+        		+ "A <|-- B\n"
+        		+ "@enduml";
+        plantUmlSource.append(temp + " \n");
+        SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
+        FileOutputStream output = new FileOutputStream(new File("Test3.png"));
+        reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
 		return true;
 	}
 	
