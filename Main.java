@@ -199,8 +199,14 @@ public class Main {
         		+ "}\n"
         		+ "class C2 {\n"
         		+ "}\n"
+        		+ "interface A1\n"
+        		+ "interface A2\n"
         		+ "P ^-- B1\n"
         		+ "P ^-- B2\n"
+        		+ "C2 ..> A2\n"
+        		+ "C1 ..> A1\n"
+        		+ "A1 <|.. B1\n"
+        		+ "A2 <|.. B2\n"
         		+ "@enduml";
         
         System.out.println(temp);
