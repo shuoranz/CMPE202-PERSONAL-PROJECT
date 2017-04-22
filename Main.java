@@ -126,25 +126,11 @@ public class Main {
         
         MethodVisitor visitor = new MethodVisitor();
         visitor.visit(cu, null);
-        
-        //start plantUML test
 
 		StringBuilder plantUmlSource = new StringBuilder();
-		
-        //plantUmlSource.append("@startuml\n");
-        
-        //plantUmlSource.append("skinparam classAttributeIconSize 0\n");
-        
-        //plantUmlSource.append("class A {\n");
 
         //String temp = visitor.getParseResult().replace("null","");
-        /*
-        String temp = "class A {\n"
-        		+ "}\n"
-        		+ "class B {\n"
-        		+ "}\n"
-        		+ "A <|-- B\n";
-        */
+
         String temp = "@startuml\n"
         +"class A {\n"
         +"  int x\n"
@@ -166,12 +152,6 @@ public class Main {
         
         plantUmlSource.append(temp + " \n");
         
-        //plantUmlSource.append("String getStr() \n");
-        
-        //plantUmlSource.append("}\n");
-        
-        //plantUmlSource.append("@enduml");
-
         SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
 
         FileOutputStream output = new FileOutputStream(new File("A.png"));
@@ -216,12 +196,6 @@ public class Main {
         
         plantUmlSource.append(temp + " \n");
         
-        //plantUmlSource.append("String getStr() \n");
-        
-        //plantUmlSource.append("}\n");
-        
-        //plantUmlSource.append("@enduml");
-
         SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
 
         FileOutputStream output = new FileOutputStream(new File("Test2.png"));
