@@ -24,22 +24,20 @@ public class Main {
 		TestCase3();
 		TestCase4();
 		TestCase5();
-		/*
+
 		try {
 		    File file = new File("src/Hello1.java");
 		    Scanner scanner = new Scanner(file);
 		    String lines;
 		    while(scanner.hasNextLine()){
 		    	lines = scanner.nextLine();
-		    	//plantUmlSource.append(lines);
-		    x	//System.out.println(lines);
+		    	//System.out.println(lines);
 		    }
 		    scanner.close();
 		    
 		} catch (FileNotFoundException e) {
 		    e.printStackTrace();
 		}
-		*/
         
 	}
 
