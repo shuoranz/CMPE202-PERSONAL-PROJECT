@@ -74,14 +74,6 @@ public class Main {
         MethodVisitor visitor = new MethodVisitor();
         visitor.visit(cu, null);
         
-        //System.out.println(visitor.getParseResult());
-        
-        //System.out.println(visitor.getParseResult().replace("null",""));
-        // visit and print the methods names
-        //System.out.println(cu.toString());
-        
-        
-
         //start plantUML test
 		
 		StringBuilder plantUmlSource = new StringBuilder();
