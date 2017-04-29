@@ -43,7 +43,7 @@ public class Main {
 		*/
         
 	}
-
+	
 	public static class MethodVisitor extends VoidVisitorAdapter<Void> {
         private String result;
         public String getParseResult(){ return this.result;}
@@ -66,30 +66,19 @@ public class Main {
     }
 	
 	static boolean TestHello() throws IOException{
-		//start JavaParse test
 		FileInputStream in = new FileInputStream("src/Hello1.java");
-        // parse it
         CompilationUnit cu = JavaParser.parse(in);
         MethodVisitor visitor = new MethodVisitor();
         visitor.visit(cu, null);
-        
-        //start plantUML test
-		
 		StringBuilder plantUmlSource = new StringBuilder();
-		
         plantUmlSource.append("@startuml\n");
         
         
         //plantUmlSource.append("skinparam classAttributeIconSize 0\n");
-        
         plantUmlSource.append("class Hello1 {\n");
-        
         String temp = visitor.getParseResult().replace("null","");
-        
         System.out.println(temp);
-        
         plantUmlSource.append(temp + " \n");
-        
         //plantUmlSource.append("String getStr() \n");
         
         plantUmlSource.append("}\n");
