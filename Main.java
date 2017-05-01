@@ -24,7 +24,7 @@ public class Main {
 		TestCase3();
 		TestCase4();
 		TestCase5();
-		TestHello();
+		//TestHello();
 		/*
 		try {
 		    File file = new File("src/Hello1.java");
@@ -95,6 +95,7 @@ public class Main {
 	static boolean TestCase1() throws IOException{
 		
 		//start JavaParse test
+		/*
 		FileInputStream in = new FileInputStream("src/A.java");
 		
 
@@ -104,7 +105,7 @@ public class Main {
         
         MethodVisitor visitor = new MethodVisitor();
         visitor.visit(cu, null);
-
+		*/
 		StringBuilder plantUmlSource = new StringBuilder();
 
         //String temp = visitor.getParseResult().replace("null","");
@@ -140,13 +141,13 @@ public class Main {
 	}
 	
 	static boolean TestCase2() throws IOException{
-		
+		/*
 		//start JavaParse test
 		FileInputStream in = new FileInputStream("src/A.java");
         CompilationUnit cu = JavaParser.parse(in);
         MethodVisitor visitor = new MethodVisitor();
         visitor.visit(cu, null);
-
+		*/
 		StringBuilder plantUmlSource = new StringBuilder();
 		
         String temp = "@startuml\n"
@@ -185,10 +186,12 @@ public class Main {
 	}
 	
 	static boolean TestCase3() throws IOException{
+		/*
 		FileInputStream in = new FileInputStream("src/A.java");
         CompilationUnit cu = JavaParser.parse(in);
         MethodVisitor visitor = new MethodVisitor();
         visitor.visit(cu, null);
+        */
 		StringBuilder plantUmlSource = new StringBuilder();
         String temp = "@startuml\n"
         		+ "class A {\n"
@@ -209,10 +212,12 @@ public class Main {
 	}
 	
 	static boolean TestCase4() throws IOException{
+		/*
 		FileInputStream in = new FileInputStream("src/A.java");
         CompilationUnit cu = JavaParser.parse(in);
         MethodVisitor visitor = new MethodVisitor();
         visitor.visit(cu, null);
+        */
 		StringBuilder plantUmlSource = new StringBuilder();
         String temp = "@startuml\n"
         		+ "class Optimist {\n"
@@ -254,10 +259,12 @@ public class Main {
 	}
 	
 	static boolean TestCase5() throws IOException{
+		/*
 		FileInputStream in = new FileInputStream("src/A.java");
         CompilationUnit cu = JavaParser.parse(in);
         MethodVisitor visitor = new MethodVisitor();
         visitor.visit(cu, null);
+        */
 		StringBuilder plantUmlSource = new StringBuilder();
         String temp = "@startuml\n"
         		+ "class ConcreteCoponent {\n"
