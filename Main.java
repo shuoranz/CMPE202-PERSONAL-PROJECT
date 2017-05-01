@@ -18,13 +18,12 @@ public class Main {
 
 	public static void main(String[] args) throws IOException{
 		
-		/*
+
 		TestCase1();
 		TestCase2();
 		TestCase3();
 		TestCase4();
 		TestCase5();
-		*/
 		TestHello();
 		/*
 		try {
@@ -58,7 +57,6 @@ public class Main {
         		
         		this.setParseResult(modifier + " " + n.getType().toString() + " " + n.getName().toString() + "()");
         	//}
-        	
             //super.visit(n, arg);
             
         }
