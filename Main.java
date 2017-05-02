@@ -19,11 +19,11 @@ public class Main {
 	public static void main(String[] args) throws IOException{
 		
 
-		TestCase1();
-		TestCase2();
-		TestCase3();
+		//TestCase1();
+		//TestCase2();
+		//TestCase3();
 		TestCase4();
-		TestCase5();
+		//TestCase5();
 		//TestHello();
 		/*
 		try {
