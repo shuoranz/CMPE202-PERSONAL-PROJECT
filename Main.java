@@ -218,6 +218,24 @@ public class Main {
         MethodVisitor visitor = new MethodVisitor();
         visitor.visit(cu, null);
         */
+		File folder = new File("src/test4");
+		File[] listOfFiles = folder.listFiles();
+
+	    for (int i = 0; i < listOfFiles.length; i++) {
+	      if (listOfFiles[i].isFile()) {
+	    	String fileName = listOfFiles[i].getName();
+	        System.out.println("File " + fileName);
+	        FileInputStream in = new FileInputStream("src/test4/"+fileName);
+	        CompilationUnit cu = JavaParser.parse(in);
+	        MethodVisitor visitor = new MethodVisitor();
+	        visitor.visit(cu, null);
+	        String temp = visitor.getParseResult().replace("null","");
+	        System.out.println(temp);
+	      } else if (listOfFiles[i].isDirectory()) {
+	        System.out.println("Directory " + listOfFiles[i].getName());
+	      }
+	    }
+		/*
 		StringBuilder plantUmlSource = new StringBuilder();
         String temp = "@startuml\n"
         		+ "class Optimist {\n"
