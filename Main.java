@@ -1,11 +1,15 @@
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.List;
 //import java.util.Optional;
 import java.util.Scanner;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.*;
+import com.github.javaparser.ast.body.BodyDeclaration;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
@@ -224,13 +228,23 @@ public class Main {
 	    for (int i = 0; i < listOfFiles.length; i++) {
 	      if (listOfFiles[i].isFile()) {
 	    	String fileName = listOfFiles[i].getName();
-	        System.out.println("File " + fileName);
+	        //System.out.println("File " + fileName);
 	        FileInputStream in = new FileInputStream("src/test4/"+fileName);
 	        CompilationUnit cu = JavaParser.parse(in);
+
+	        
+	        String ValDeclaration = getCuDeclaration(cu);
+	        System.out.println(ValDeclaration);
+	        
+	        String ValConstructor = getCuConstructorDecl(cu);
+	        System.out.println(ValConstructor);
+	        
 	        MethodVisitor visitor = new MethodVisitor();
 	        visitor.visit(cu, null);
 	        String temp = visitor.getParseResult().replace("null","");
 	        System.out.println(temp);
+
+	        
 	      } else if (listOfFiles[i].isDirectory()) {
 	        System.out.println("Directory " + listOfFiles[i].getName());
 	      }
@@ -273,7 +287,9 @@ public class Main {
         SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
         FileOutputStream output = new FileOutputStream(new File("Test4.png"));
         reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
+        		*/
 		return true;
+
 	}
 	
 	static boolean TestCase5() throws IOException{
@@ -324,4 +340,39 @@ public class Main {
         reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
 		return true;
 	}
+	
+	private static String getCuConstructorDecl(CompilationUnit compilationUnit) {
+	    // maybe default ctor not present in source
+	    ConstructorDeclaration[] ctorDecls = compilationUnit.getTypes().get(0).getMembers().stream()
+	            .filter(bd -> bd instanceof ConstructorDeclaration)
+	            .map(bd -> (ConstructorDeclaration) bd).toArray(ConstructorDeclaration[]::new);
+
+	    if (ctorDecls.length == 0) {
+	        return null;
+	    } else {
+	        for (ConstructorDeclaration ctorDecl : ctorDecls) {
+	            // FIXME test this part
+	        	NodeList paras = ctorDecl.getParameters();
+	        	int length = paras.size();
+	        	
+	        	for(int i=0;i<length;i++){
+	        		String tempPara = paras.get(i).toString();
+	        		String[] splitPara = tempPara.split(" ");
+	        		String returnValue = "+" + ctorDecl.getName() + "(" + splitPara[1] + " : " + splitPara[0] + ")";
+	        		return returnValue;
+	        	}
+	        }
+	        return null;
+	    }
+	}
+	
+	private static String getCuDeclaration(CompilationUnit compilationUnit) {
+	    // maybe default ctor not present in source
+		String className = compilationUnit.getTypes().get(0).getName().toString();
+	    
+		String returnValue;
+		returnValue = "Class " + className + "{";
+		return returnValue;
+	}
+	
 }
