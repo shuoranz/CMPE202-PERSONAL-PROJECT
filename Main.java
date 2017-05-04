@@ -6,12 +6,14 @@ import java.util.Scanner;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.*;
 import com.github.javaparser.ast.body.BodyDeclaration;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.github.javaparser.utils.Utils;
 
 import net.sourceforge.plantuml.*;
 public class Main {
@@ -49,7 +51,15 @@ public class Main {
 	
 	public static class MethodVisitor extends VoidVisitorAdapter<Void> {
         private String result;
-        public String getParseResult(){ return this.result;}
+        public String getParseResult(){
+        	String returnVal = this.result;
+        	if(returnVal != null && !returnVal.isEmpty()){
+        		return this.result;
+        	} else {
+        		return "";
+        	}
+        	
+        }
         private void setParseResult(String value){this.result+=value+"\n";}
         @Override
         public void visit(MethodDeclaration n, Void arg) {
@@ -57,10 +67,10 @@ public class Main {
         	//System.out.print(n.getType() + " " + n.getModifiers());
         	//System.out.println(n.toString());
         	String modifier = n.getModifiers().toString();
-        	//if(modifier.equals("[PUBLIC]")){
+        	if(modifier.equals("[PUBLIC]")){
         		
-        		this.setParseResult(modifier + " " + n.getType().toString() + " " + n.getName().toString() + "()");
-        	//}
+        		this.setParseResult( "+" + n.getName().toString() + "(): " + n.getType().toString());
+        	}
             //super.visit(n, arg);
             
         }
@@ -237,16 +247,18 @@ public class Main {
 	        System.out.println(ValDeclaration);
 	        
 	        String ValConstructor = getCuConstructorDecl(cu);
-	        System.out.println(ValConstructor);
+	        if(ValConstructor != null && !ValConstructor.isEmpty()){
+	        	System.out.println(ValConstructor);
+	        }
 	        
 	        MethodVisitor visitor = new MethodVisitor();
 	        visitor.visit(cu, null);
-	        String temp = visitor.getParseResult().replace("null","");
+	        String temp = "";
+	        if(visitor.getParseResult().contains("null"))
+	        	temp = visitor.getParseResult().replace("null","");
 	        System.out.println(temp);
 
-	        
-	      } else if (listOfFiles[i].isDirectory()) {
-	        System.out.println("Directory " + listOfFiles[i].getName());
+	        System.out.println("}");
 	      }
 	    }
 		/*
@@ -368,11 +380,24 @@ public class Main {
 	
 	private static String getCuDeclaration(CompilationUnit compilationUnit) {
 	    // maybe default ctor not present in source
-		String className = compilationUnit.getTypes().get(0).getName().toString();
-	    
+		//String className = compilationUnit.getTypes().get(0).getName().toString();
+		String className = compilationUnit.getTypes().get(0).getNameAsString();
 		String returnValue;
-		returnValue = "Class " + className + "{";
+		//compilationUnit.getTypes().get(0).getFields().toString()
+		if(!isInterface(compilationUnit,className)){
+			returnValue = "class " + className + "{";
+		} else {
+			returnValue = "interface " + className + "{";
+		}
 		return returnValue;
 	}
 	
+	private static Boolean isInterface(CompilationUnit compilationUnit, String className){
+		
+		return compilationUnit.toString().contains("interface "+className);
+	}
+	
+	private static String getFather(CompilationUnit compilationUnit, String className){
+		return null;
+	}
 }
