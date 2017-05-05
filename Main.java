@@ -247,7 +247,7 @@ public class Main {
         */
 		File folder = new File("src/test4");
 		File[] listOfFiles = folder.listFiles();
-
+		String valClass = "@startuml\n";
 	    for (int i = 0; i < listOfFiles.length; i++) {
 	      if (listOfFiles[i].isFile()) {
 	    	String fileName = listOfFiles[i].getName();
@@ -257,11 +257,13 @@ public class Main {
 
 	        
 	        String ValDeclaration = getCuDeclaration(cu);
-	        System.out.println(ValDeclaration);
+	        //System.out.println(ValDeclaration);
+	        valClass += ValDeclaration;
 	        
 	        String ValConstructor = getCuConstructorDecl(cu);
 	        if(ValConstructor != null && !ValConstructor.isEmpty()){
-	        	System.out.println(ValConstructor);
+	        	//System.out.println(ValConstructor);
+	        	valClass += ValConstructor;
 	        }
 	        
 	        MethodVisitor visitor = new MethodVisitor();
@@ -269,13 +271,16 @@ public class Main {
 	        String temp = "";
 	        if(visitor.getParseResult().contains("null"))
 	        	temp = visitor.getParseResult().replace("null","");
-	        System.out.println(temp);
-
-	        System.out.println("}");
+	        //System.out.println(temp);
+	        valClass += temp + "\n}\n";
+	        //System.out.println("}");
 	      }
 	    }
-		/*
+	    valClass += "@enduml";
+	    System.out.println(valClass);
+
 		StringBuilder plantUmlSource = new StringBuilder();
+		/*
         String temp = "@startuml\n"
         		+ "class Optimist {\n"
         		+ "+Optimist(sub : ConcreteSubject)\n"
@@ -308,11 +313,11 @@ public class Main {
         		+ "ConcreteObserver <|-- Pessimist\n"
         		+ "ConcreteSubject -- ConcreteObserver\n"
         		+ "@enduml";
-        plantUmlSource.append(temp + " \n");
+        */
+        plantUmlSource.append(valClass + " \n");
         SourceStringReader reader = new SourceStringReader(plantUmlSource.toString());
         FileOutputStream output = new FileOutputStream(new File("Test4.png"));
         reader.generateImage(output, new FileFormatOption(FileFormat.PNG, false));
-        		*/
 		return true;
 
 	}
@@ -383,7 +388,7 @@ public class Main {
 	        	for(int i=0;i<length;i++){
 	        		String tempPara = paras.get(i).toString();
 	        		String[] splitPara = tempPara.split(" ");
-	        		String returnValue = "+" + ctorDecl.getName() + "(" + splitPara[1] + " : " + splitPara[0] + ")";
+	        		String returnValue = "+" + ctorDecl.getName() + "(" + splitPara[1] + " : " + splitPara[0] + ")\n";
 	        		return returnValue;
 	        	}
 	        }
@@ -398,9 +403,9 @@ public class Main {
 		String returnValue;
 		//compilationUnit.getTypes().get(0).getFields().toString()
 		if(!isInterface(compilationUnit,className)){
-			returnValue = "class " + className + "{";
+			returnValue = "class " + className + "{\n";
 		} else {
-			returnValue = "interface " + className + "{";
+			returnValue = "interface " + className + "{\n";
 		}
 		return returnValue;
 	}
