@@ -69,7 +69,20 @@ public class Main {
         	String modifier = n.getModifiers().toString();
         	if(modifier.equals("[PUBLIC]")){
         		
-        		this.setParseResult( "+" + n.getName().toString() + "(): " + n.getType().toString());
+        		NodeList paras = n.getParameters();
+	        	int length = paras.size();
+	        	String resultPara;
+	        	resultPara = "";
+	        	for(int i=0;i<length;i++){
+	        		String tempPara = paras.get(i).toString();
+	        		String[] splitPara = tempPara.split(" ");
+	        		//System.out.println(tempPara);
+	        		resultPara += splitPara[1] + " : " + splitPara[0] + ",";
+	        	}
+	        	if (resultPara != null && resultPara.length() > 0) {
+	        		resultPara = resultPara.substring(0, resultPara.length()-1);
+        	    }
+        		this.setParseResult( "+" + n.getName().toString() + "(" + resultPara + "): " + n.getType().toString());
         	}
             //super.visit(n, arg);
             
