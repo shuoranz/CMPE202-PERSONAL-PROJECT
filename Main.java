@@ -276,9 +276,21 @@ public class Main {
 	        //System.out.println("}");
 	      }
 	    }
+	    
+	    //System.out.println(valClass);
+	    String valClassRelation = "";
+	    for (int i = 0; i < listOfFiles.length; i++) {
+	    	if (listOfFiles[i].isFile()) {
+	    		String fileName = listOfFiles[i].getName();
+		        //System.out.println("File " + fileName);
+		        FileInputStream in = new FileInputStream("src/test4/"+fileName);
+		        CompilationUnit cu = JavaParser.parse(in);
+		        valClassRelation += getClassRelation(cu);
+	    	}
+	    }
+	    valClass += valClassRelation;
 	    valClass += "@enduml";
 	    System.out.println(valClass);
-
 		StringBuilder plantUmlSource = new StringBuilder();
 		/*
         String temp = "@startuml\n"
@@ -417,5 +429,61 @@ public class Main {
 	
 	private static String getFather(CompilationUnit compilationUnit, String className){
 		return null;
+	}
+	
+	private static String getClassRelation(CompilationUnit cu){
+		
+		String className = cu.getTypes().get(0).getNameAsString();
+		String cutDeclaration = cutDeclaration(cu,className);
+		return cutDeclaration;
+	}
+	
+	private static String cutDeclaration(CompilationUnit cu, String className){
+		String returnValue = "";
+		//
+		if(cu.toString().contains(" "+className+" ")){
+
+			String[] temp1 = cu.toString().split("}");
+			String[] temp2 = temp1[0].split(" "+className+" ");
+			//System.out.println(temp2[1]);
+			if(containsIgnoreCase(temp2[1],"extends")){
+				String[] temp3 = temp1[0].split(" extends ");
+				if(temp3[1].contains(" ")){
+					String[] temp4 = temp3[1].split(" ");
+					returnValue += className + " --|> " + temp4[0] + "\n";
+				} else {
+					returnValue += className + " --|> " + temp3[0] + "\n";
+				}
+				//System.out.println(returnValue);
+			} else if (containsIgnoreCase(temp2[1],"implements")){
+				String[] temp3 = temp1[0].split(" implements ");
+				if(temp3[1].contains(" ")){
+					String[] temp4 = temp3[1].split(" ");
+					returnValue += className + " ..|> " + temp4[0] + "\n";
+				} else {
+					returnValue += className + " ..|> " + temp3[0] + "\n";
+				}
+				//System.out.println(returnValue);
+			}
+		} else {
+			return "";
+		}
+			
+		return returnValue;
+		
+	}
+	
+	public static boolean containsIgnoreCase(String str, String searchStr)     {
+	    if(str == null || searchStr == null) return false;
+
+	    final int length = searchStr.length();
+	    if (length == 0)
+	        return true;
+
+	    for (int i = str.length() - length; i >= 0; i--) {
+	        if (str.regionMatches(true, i, searchStr, 0, length))
+	            return true;
+	    }
+	    return false;
 	}
 }
