@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.*;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
@@ -187,7 +189,8 @@ public class Main {
 	    }
 	    valClass += valClassRelation;
 	    valClass += "@enduml";
-	    System.out.println(valClass);
+	    valClass = cleanSourceCode(valClass);
+	    //System.out.println(valClass);
 		StringBuilder plantUmlSource = new StringBuilder();
 		/*
         String temp = "@startuml\n"
@@ -279,7 +282,7 @@ public class Main {
 		String className = cu.getTypes().get(0).getNameAsString();
 		String cutDeclaration = cutDeclaration(cu,className);
 		String cutField = cutField(cu,className,allClasses);
-		return cutDeclaration+cutField;
+		return cutDeclaration + cutField;
 	}
 	
 	private static String cutField(CompilationUnit cu, String className, ArrayList<String> allClasses){
@@ -370,5 +373,44 @@ public class Main {
 	            return true;
 	    }
 	    return false;
+	}
+	
+	public static String cleanSourceCode(String javaSource){
+		String[] stringLn = javaSource.split("\n");
+		String returnString = javaSource;
+		System.out.println("length is:" + stringLn.length);
+		for(int i=0; i<stringLn.length; i++){
+			if(stringLn[i].contains(" ..|> ")){
+				String[] temp1 = stringLn[i].split(Pattern.quote(" ..|> "));
+				//System.out.println(temp1[0] + " " +temp1[1]);
+				String className = "class " + temp1[0] ;
+				String interfaceName = "interface " + temp1[1] ;
+				String classMethodsStringOld = javaSource.split(className)[1].split("}")[0];
+				String classMethodsStringNew = classMethodsStringOld;
+				//System.out.println(classMethodsStringOld);
+				String[] classMethods = classMethodsStringOld.split("\n");
+				String[] interfaceMethods = javaSource.split(interfaceName)[1].split("\n");
+				for(int j=1; j<interfaceMethods.length;j++){
+					if(interfaceMethods[j].equals("}")){
+						break;
+					} else {
+						for(int k=1; k<classMethods.length; k++){
+							if(classMethods[k].equals("}")){
+								break;
+							}else if(interfaceMethods[j].equals(classMethods[k])){
+								//System.out.println(k + "duplicate: " + interfaceMethods[j]);
+								//System.out.println(k + j);
+								classMethodsStringNew = classMethodsStringNew.replace(classMethods[k]+"\n","");
+							}
+						}
+					}
+					
+				}
+				//System.out.println(classMethodsStringNew);
+				returnString = returnString.replace(classMethodsStringOld, classMethodsStringNew);
+			}
+		}
+		
+		return returnString;
 	}
 }
