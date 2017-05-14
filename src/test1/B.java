@@ -1,4 +1,4 @@
-Package test1; 
+ 
 
 public class B {
  

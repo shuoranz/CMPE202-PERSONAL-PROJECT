@@ -1,4 +1,3 @@
-package test4;
 
 public class Pessimist extends ConcreteObserver {
 
